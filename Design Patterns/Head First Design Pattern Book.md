@@ -1,4 +1,4 @@
-## Chapter One 
+## Chapter One (strategy)
 
 ### design pattern rules :
 
@@ -55,4 +55,43 @@ understand polymorphism : https://chat.openai.com/share/a88e1e22-394b-48d9-b95d-
 
 
 
-## Chapter Two :
+## Chapter Two(observer) :
+
+### definition :
+- Publishers + Subscribers = Observer Pattern
+- **The Observer Pattern** defines a one-to-many dependency between objects so that when one object changes state, all of its dependents are notified and updated automatically
+- ![[Pasted image 20240220162630.png]]
+- 
+
+
+### Rules:
+- When two objects are loosely coupled, they can interact, but they typically have very little knowledge of each other. As we’re going to see, loosely coupled designs often give us a lot of flexibility (more on that in a bit)
+	- the only thing the subject knows about an observer is that it implements a certain interface (the Observer interface)
+	- We can add new observers at any time
+	- We never need to modify the subject to add new types of observers
+	- We can reuse subjects or observers independently of each other
+	- Changes to either the subject or an observer will not affect the other
+- Strive(try to achieve ) for loosely coupled designs between objects that interact 
+
+- in observer pattern it's better to make observers pull data from subject instead of subject push data to observers 
+	- ![[Pasted image 20240220144758.png]]
+	- ![[Pasted image 20240220144822.png]]
+
+### Observer Design and Implementation  :
+- ![[Pasted image 20240220164151.png]]
+
+-  ![[Pasted image 20240220164305.png]]
+- ![[Pasted image 20240220164336.png]]
+- ![[Pasted image 20240220164402.png]]
+
+
+### Main Notes :
+- The Observer Pattern defines a one-to-m any relations hip between objects .
+- Subjects update Observers using a com m on interface.
+- Observers of any concrete type can participate in the pattern as long as they implement the Observer interface.
+- Observers are loosely coupled in that the Subject knows nothing about them , other than that they implement the Observer interface.
+- You can pus h or pull data from the Subject when using the pattern (pull is considered more “correct”).
+
+- The Observer Pattern is related to the Publish/Subscribe Pattern, which is for m ore complex situations with multiple Subjects and/or multiple m es s age types .
+- The Observer Pattern is a com m only us ed pattern, and we’ll see it again when we learn about Model-View-Controller.
+
