@@ -18,8 +18,31 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "f69d72f83485c89b",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "Images/Pasted image 20240220144758.png"
+              }
+            }
+          },
+          {
+            "id": "b958f4c1c449ac5e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "TO-KNOW/MAIN.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -85,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Design Patterns/Head First Design Pattern Book.md",
+                "file": "TO-KNOW/MAIN.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +125,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Design Patterns/Head First Design Pattern Book.md",
+                "file": "TO-KNOW/MAIN.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Design Patterns/Head First Design Pattern Book.md"
+                "file": "TO-KNOW/MAIN.md"
               }
             }
           }
@@ -133,8 +156,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -146,28 +168,31 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "336143b332468e30",
+  "active": "b958f4c1c449ac5e",
   "lastOpenFiles": [
-    "Pasted image 20240220144822.png",
-    "Pasted image 20240220144758.png",
-    "Pasted image 20240220144742.png",
-    "Pasted image 20240220164402.png",
-    "Pasted image 20240220164336.png",
-    "Pasted image 20240220164305.png",
-    "Pasted image 20240220164151.png",
-    "Pasted image 20240220162630.png",
-    "Database/General-Notes-SQL.md",
-    "Images/PolyMorePhism.png",
-    "Images/Pasted image 20240217155047.png",
-    "Database/Fundamentals of Database System.md",
-    "Images/Pasted image 20240217164629.png",
     "Design Patterns/Head First Design Pattern Book.md",
+    "TO-KNOW/MAIN.md",
+    "Database/Indexing (codecamp).md",
+    "TO-KNOW",
+    "Pasted image 20240515073510.png",
+    "Pasted image 20240515073407.png",
+    "Database/Fundamentals of Database System.md",
+    "OS/Operating System Three Easy Pieces.md",
+    "Pasted image 20240415035535.png",
+    "Pasted image 20240306223952.png",
+    "Images/Pasted image 20240220144742.png",
+    "Images/Pasted image 20240220144758.png",
+    "OS",
+    "Images/Pasted image 20240220144822.png",
+    "Images/Pasted image 20240220164402.png",
+    "Images/Pasted image 20240220164336.png",
+    "Images/Pasted image 20240220164305.png",
+    "Database/General-Notes-SQL.md",
     "Database/WAL.md",
     "Deep Learning/CNN Notes.md",
     "Machine Learning/PCA.md",
     "Database/Redis.md",
     "Machine Learning",
-    "Untitled.md",
     "Database",
     "Welcome.md",
     "create a link.md"
