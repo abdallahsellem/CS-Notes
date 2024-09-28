@@ -120,7 +120,7 @@ The Decorator Pattern attaches additional responsibilities to an object dynamica
 -  applying the Open-Closed Principle EVERYWHERE is wasteful and unnecessary, and can lead to complex, hard-to-understand code.
 - inheritance is one form of extension, but not necessarily the best way to achieve flexibility in our designs .
 - In our designs we should allow behavior to be extended without the need to modify existing code.
-- Composition and delegation can often be us ed to add new behaviors at runtime.
+- Composition and delegation can often be used to add new behaviors at runtime.
 - The Decorator Pattern provides an alternative to sub-classing for extending behavior.
 - The Decorator Pattern involves a set of decorator class es that are used to wrap concrete components .
 - Decorator class es mirror the type of the components they decorate. (In fact, they are the s am e type as the components they decorate, either through inheritance or interface implementation.)
@@ -128,3 +128,16 @@ The Decorator Pattern attaches additional responsibilities to an object dynamica
 - You can wrap a component with any number of decorators .
 - Decorators are typically trans parent to the client of the component—that is , unless the client is relying on the component’s concrete type.
 - Decorators can res ult in m any s m all objects in our design, and overuse can be complex.
+
+
+
+
+
+
+### Chapter Four (Factory):
+
+
+factory can be implemented in two ways : 
+1) make the subclasses determine which instance they want by overriding the abstract method in the super class 
+2) make an complete class that return the instance i want 
+3) 
