@@ -56,6 +56,9 @@ understand polymorphism : https://chat.openai.com/share/a88e1e22-394b-48d9-b95d-
 
 
 ## Chapter Two(observer) :
+### UML 
+
+![[Pasted image 20250410110207.png]]
 
 ### definition :
 - Publishers + Subscribers = Observer Pattern
@@ -87,17 +90,37 @@ understand polymorphism : https://chat.openai.com/share/a88e1e22-394b-48d9-b95d-
 
 ### Main Notes :
 - The Observer Pattern defines a one-to-m any relations hip between objects .
-- Subjects update Observers using a com m on interface.
+- Subjects update Observers using a common interface.
 - Observers of any concrete type can participate in the pattern as long as they implement the Observer interface.
 - Observers are loosely coupled in that the Subject knows nothing about them , other than that they implement the Observer interface.
-- You can pus h or pull data from the Subject when using the pattern (pull is considered more “correct”).
+- You can push or pull data from the Subject when using the pattern (pull is considered more “correct”).
 
-- The Observer Pattern is related to the Publish/Subscribe Pattern, which is for m ore complex situations with multiple Subjects and/or multiple m es s age types .
+- The Observer Pattern is related to the Publish/Subscribe Pattern, which is for more complex situations with multiple Subjects and/or multiple message types .
 - The Observer Pattern is a com m only used pattern, and we’ll see it again when we learn about Model-View-Controller.
 
 
 
 ## Chapter Three (Decorator):
+
+### a problem that rise if we didn't use Decorator :
+The initial version of the library was based on the `Notifier` class that had only a few fields, a constructor and a single `send` method. The method could accept a message argument from a client and send the message to a list of emails that were passed to the notifier via its constructor. A third-party app which acted as a client was supposed to create and configure the notifier object once, and then use it each time something important happened.
+
+![Structure of the library before applying the Decorator pattern](https://refactoring.guru/images/patterns/diagrams/decorator/problem1-en.png)
+
+A program could use the notifier class to send notifications about important events to a predefined set of emails.
+
+At some point, you realize that users of the library expect more than just email notifications. Many of them would like to receive an SMS about critical issues. Others would like to be notified on Facebook and, of course, the corporate users would love to get Slack notifications.
+
+![Structure of the library after implementing other notification types](https://refactoring.guru/images/patterns/diagrams/decorator/problem2.png)
+
+Each notification type is implemented as a notifier’s subclass.
+
+How hard can that be? You extended the `Notifier` class and put the additional notification methods into new subclasses. Now the client was supposed to instantiate the desired notification class and use it for all further notifications.
+
+But then someone reasonably asked you, “Why can’t you use several notification types at once? If your house is on fire, you’d probably want to be informed through every channel.”
+
+You tried to address that problem by creating special subclasses which combined several notification methods within one class. However, it quickly became apparent that this approach would bloat the code immensely, not only the library code but the client code as well.
+![[Pasted image 20250410111538.png]]
 
 ### Decorator Properties and definition:
 The Decorator Pattern attaches additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
@@ -110,11 +133,6 @@ The Decorator Pattern attaches additional responsibilities to an object dynamica
 
 
 ### Decorator Design and Implementation :
-
-
-
-
-
 
 ### Main Notes :
 -  applying the Open-Closed Principle EVERYWHERE is wasteful and unnecessary, and can lead to complex, hard-to-understand code.
@@ -134,7 +152,7 @@ The Decorator Pattern attaches additional responsibilities to an object dynamica
 
 
 
-### Chapter Four (Factory):
+## Chapter Four (Factory):
 
 
 factory can be implemented in two ways : 
