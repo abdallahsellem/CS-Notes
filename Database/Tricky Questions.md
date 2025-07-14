@@ -47,3 +47,5 @@ Currently:
     
 
 **a)** Will this query perform efficiently? Why or why not?
+
+
