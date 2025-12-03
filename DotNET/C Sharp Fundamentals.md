@@ -349,3 +349,162 @@ public class HomeController : Controller
 | **Lazy Loading**        | Loads related data only when accessed              | Use when you want to load related data on-demand    |
 | **Eager Loading**       | Loads related data immediately with the main query | Use when you need related data upfront              |
 | **Explicit Loading**    | Loads related data manually after the main entity  | Use when you want control over when related data is fetched |
+
+## **Async / await** 
+
+```
+Async Doesn't create a new thread , it free the already taken thread from thread pool 
+```
+### **1. ASP.NET Core uses the .NET Thread Pool**
+
+Every HTTP request is handled by a thread taken from the thread pool.  
+The pool is limited → threads must not be wasted.
+
+---
+
+### **2. Most backend operations are I/O**
+
+Examples:
+
+- Database calls
+    
+- HTTP calls
+    
+- File I/O
+    
+- Network operations
+    
+
+I/O operations **do not require CPU** after they start.
+
+---
+
+### **3. Synchronous code blocks the thread**
+
+`var users = db.Users.ToList(); // sync`
+
+- Thread starts the I/O
+    
+- Then **waits doing nothing**
+    
+- Thread remains blocked until the DB responds
+    
+- Fewer threads for other requests
+    
+- Leads to thread starvation & poor scalability
+    
+
+---
+
+### **4. Async/Await frees the thread**
+
+`var users = await db.Users.ToListAsync();`
+
+- Thread starts I/O
+    
+- Thread is **released back to the pool** immediately
+    
+- No blocking
+    
+- The request resumes later when I/O completes
+    
+
+**Async doesn’t create new threads — it frees the existing one.**
+
+---
+
+### **5. Benefit: Scalability, not speed**
+
+Async improves:
+
+- throughput
+    
+- ability to handle many requests
+    
+- thread utilization
+    
+
+Async does **not** make database operations faster — the DB decides that.
+
+---
+
+### **6. ASP.NET Core has NO SynchronizationContext**
+
+Unlike old ASP.NET or WinForms:
+
+- No deadlocks from `.Result` or `.Wait()` caused by UI context
+    
+- Async flows naturally in the server
+    
+- Continuations run on the thread pool
+    
+
+---
+
+### **7. Thread creation is rare**
+
+C# only creates new threads when you explicitly do:
+
+`Task.Run(() => CPUWork());`
+
+This is only for **CPU-bound** tasks, not I/O.
+
+---
+
+### **8. Key principle**
+
+> **Async I/O frees the thread → more available threads → more requests served → huge scalability improvement.**
+
+## **HttpClient & IHttpClientFactory**
+
+### Problem with `new HttpClient()`
+- Creates a new socket handler each time → **socket exhaustion**.
+- DNS not refreshed → may call old IPs.
+- Inefficient → loses connection pooling.
+
+### Solution: `IHttpClientFactory`
+- Centralizes HttpClient creation.
+- Reuses **message handlers** → prevents socket exhaustion.
+- Refreshes DNS automatically.
+- Supports **Typed & Named Clients**:
+```csharp
+services.AddHttpClient("GitHub", client =>
+{
+    client.BaseAddress = new Uri("https://api.github.com/");
+});
+```
+## **EF Core — Change Tracking**
+
+### What is Change Tracking
+- EF Core monitors entity **state** in the `DbContext`.
+- Tracks changes to generate **SQL commands** on `SaveChanges()`.
+
+### Entity States
+| State      | Meaning                                               |
+|------------|-------------------------------------------------------|
+| Added      | Will be inserted                                      |
+| Modified   | Will be updated                                      |
+| Deleted    | Will be removed                                      |
+| Unchanged  | No changes → no SQL                                  |
+| Detached   | Not tracked                                         |
+
+### How it Works
+- Normal queries track entities automatically.
+- EF stores original values → detects changes.
+- On `SaveChanges()`, only modified fields generate SQL updates.
+
+### When to Use
+- **Tracking:** update scenarios
+```csharp
+var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == 1);
+user.Name = "John";
+await _db.SaveChangesAsync();
+```
+
+
+```csharp
+
+var users = await _db.Users.AsNoTracking().ToListAsync();
+```
+
+No Tracking: read-only queries → better performance
