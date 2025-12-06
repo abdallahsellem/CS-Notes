@@ -1,4 +1,4 @@
-# API Styles 
+# **API Styles** 
 ## REST – 
 
 ### What it is:
@@ -126,3 +126,277 @@
 |**Drawback**|Over-fetching|Tight coupling|Tricky to optimize/setup|
 
 ---
+
+
+# **HTTP Versions — Key Differences**
+
+## **HTTP/1.0**
+
+- Introduced in 1996.
+    
+- **No persistent connections** → each request opens a new TCP connection.
+    
+- High latency because of repeated TCP handshakes.
+    
+- Does **not support pipelining**.
+    
+- Designed for simple, small pages.
+    
+
+---
+
+## **HTTP/1.1**
+
+- Released in 1999; still widely used.
+    
+- **Persistent connections by default** (Connection: keep-alive).
+    
+- Supports **pipelining**, though rarely used due to head-of-line blocking.
+    
+- Introduced **Host header** so one server can host multiple domains.
+    
+- Better caching, chunked transfer encoding, and more headers.
+    
+- Still suffers from **TCP head-of-line blocking**.
+    
+
+---
+
+## **HTTP/2**
+
+- Released in 2015; major performance upgrade.
+    
+- **Binary protocol** instead of text → faster and less error-prone.
+    
+- Supports **multiplexing** → multiple requests/responses in one TCP connection without blocking.
+	- ![[Pasted image 20251202113357.png]]
+    
+- Uses **header compression (HPACK)** → reduces overhead.
+    
+- Supports **server push** (now deprecated).
+    
+- Still uses **TCP**, so it still suffers from TCP head-of-line blocking at the _transport_ level.
+    
+
+---
+
+## **HTTP/3**
+
+- Released in 2022; modern standard.
+    
+- Uses **QUIC** instead of TCP → built on UDP.
+    
+- **No TCP head-of-line blocking** → faster and smoother.
+    
+- QUIC integrates TLS 1.3 → **faster handshakes and more secure**.
+    
+- Better for mobile networks because QUIC handles connection migration (changing IPs) gracefully.
+    
+- True multiplexing without transport-level blocking.
+
+
+### **QUIC — Overview**
+
+- QUIC = **Quick UDP Internet Connections**
+    
+- Developed by Google, now standardized by IETF.
+    
+- Purpose: **replace TCP + TLS** for faster, reliable, secure connections.
+    
+- Works over **UDP**, not TCP.
+    
+- Designed to **reduce latency**, improve **connection migration**, and eliminate **head-of-line blocking**.
+    
+
+---
+
+### **Why QUIC exists**
+
+1. TCP has inherent **head-of-line (HOL) blocking** → if one packet is lost, all subsequent packets wait.
+    
+2. TLS over TCP → adds **extra handshake round-trips**.
+    
+3. Mobile networks → IP changes cause TCP connection drop.
+    
+
+QUIC fixes all of these by **merging transport + security** and using **multiplexing**.
+
+---
+
+### **Key Internals of QUIC**
+
+#### **1. Runs on UDP**
+
+- UDP is **connectionless** → QUIC builds its own **reliable connection layer** on top.
+    
+- No need to wait for TCP handshake before sending encrypted data.
+    
+
+---
+
+#### **2. Connection establishment**
+
+- QUIC combines **TLS 1.3 handshake** + connection setup:
+    
+    - **0-RTT** handshake → client can send data immediately if it has connected before.
+        
+    - Only **1-RTT** is needed for new connections (TCP + TLS often takes 2-3 RTTs).
+        
+
+---
+
+#### **3. Multiplexed streams**
+
+- A QUIC connection can carry **multiple independent streams**.
+    
+- Streams are **independently reliable**:
+    
+    - If one stream loses packets → only that stream waits.
+        
+    - Other streams continue without HOL blocking (unlike TCP).
+        
+
+---
+
+#### **4. Reliability and congestion control**
+
+- QUIC implements **ACKs, retransmissions, flow control**, and **congestion control**, similar to TCP.
+    
+- Unlike TCP, these are done **in user space**, allowing **faster iteration** and **better tuning**.
+    
+
+---
+
+#### **5. Packet structure**
+
+- QUIC packets include:
+    
+    - **Header** → connection ID, packet number
+        
+    - **Frames** → data, ACKs, control signals
+        
+- Supports **variable-length packet numbers** → reduces overhead.
+    
+- Header contains **connection identifiers** → enables **connection migration** when IP changes.
+####  **Performance benefits**
+
+- **Faster page load times** (reduces handshake RTTs).
+    
+- **No TCP HOL blocking** → good for video, games, streaming.
+    
+- **Better over lossy networks** → mobile, satellite, etc.
+    
+- **Secure by default** → TLS baked in.
+
+![[Pasted image 20251202103332.png]]
+# **Proxy vs Reverse Proxy**
+![[Pasted image 20251202132504.png]]- A proxy server acts as an **intermediary** between a client and the internet.
+    
+- Client → Proxy → Internet (instead of Client → Internet directly).
+    
+
+---
+
+#### **🔹 Why Use a Proxy Server?**
+
+- **Hide client identity** (IP masking).
+    
+- **Security**: filters traffic, blocks malicious sites.
+    
+- **Access control**: restrict or allow internet usage.
+    
+- **Caching**: speeds up repeated requests and reduces bandwidth.
+    
+- **Load balancing**: distributes traffic across multiple servers.
+    
+- **Bypass geo-restrictions** or content filters.
+    
+
+---
+
+#### **🔹 How a Proxy Works?**
+
+- Client sends request to proxy.
+    
+- Proxy evaluates, optional filtering/authentication.
+    
+- Proxy forwards request to target server.
+    
+- Response is returned to proxy → then to client.
+    
+- Client only sees the proxy’s IP, not the destination server’s.
+#### **🔹 Key Features**
+
+- **Content filtering** (block websites).
+    
+- **Traffic logging** (monitor activity).
+    
+- **IP masking**.
+    
+- **Rate limiting**.
+    
+- **Caching** for performance.
+    
+- **Authentication** (require user login for internet access).
+#### **What is a Reverse Proxy?**
+
+- A reverse proxy is a server that sits **in front of backend servers**.
+    
+- Clients send requests to the **reverse proxy**, not directly to backend servers.
+    
+- It forwards requests to one or more internal servers and returns the response back to the client.
+    
+
+---
+
+#### **🔹 Why Use a Reverse Proxy?**
+
+- **Load Balancing** → distributes client requests across multiple servers.
+    
+- **Security** → hides backend servers’ IPs and architecture.
+    
+- **TLS/SSL Termination** → handles encryption/decryption to reduce server load.
+    
+- **Caching** → reduces load on backend servers by caching static or repeated responses.
+    
+- **Compression & Optimization** → improves performance.
+    
+- **Rate Limiting & Traffic Control** → prevents abuse.
+    
+- **Failover & High Availability** → reroutes traffic if a backend server goes down.
+    
+
+---
+
+#### **🔹 How a Reverse Proxy Works**
+
+- Client → Reverse Proxy → Backend Server.
+    
+- Backend server responds → Reverse Proxy → Client.
+    
+- Client **never knows** which server actually handled the request.
+    
+
+---
+
+#### **🔹 Common Use Cases**
+
+- Websites handling **high traffic** (Amazon, YouTube, Cloudflare).
+    
+- Protecting microservices behind a single entry point.
+    
+- Terminating SSL certificates at the proxy instead of backend.
+    
+- Preventing DDoS attacks.
+#### **Benefits of Reverse Proxy**
+
+- **Enhanced Security:** By acting as a protective layer, a reverse proxy hides backend servers from clients, reducing the risk of attacks directly targeting backend infrastructure.
+    
+- **Load Balancing:** A reverse proxy can distribute incoming requests evenly across multiple backend servers, improving system reliability and preventing server overload.
+    
+- **Caching Static Content:** Reverse proxies can cache static assets like images, CSS, and JavaScript, reducing the need to fetch these files from the backend repeatedly.
+    
+- **SSL Termination:** Reverse proxies can handle SSL encryption, offloading this work from backend servers.
+    
+- **Web Application Firewall (WAF):** Reverse proxies can inspect incoming requests, acting as a firewall to detect and block malicious traffic.
+- 
