@@ -3,40 +3,6 @@
 
 ---
 
-### **Database Schema**
-
-We'll define key **tables/entities**:
-
-#### **Users Table (Employers, Job Seekers, Admins)**
-
-- `Id (PK)`
-- `FullName`
-- `Email`
-- `PasswordHash`
-- `Role (Admin, Employer, JobSeeker)`
-- `CreatedAt`
-
-#### **Jobs Table**
-
-- `Id (PK)`
-- `Title`
-- `Description`
-- `Category (IT, Healthcare, etc.)`
-- `Location`
-- `SalaryRange`
-- `RequiredSkills (JSON array)`
-- `EmployerId (FK → Users.Id)`
-- `Status (Open, Closed)`
-- `CreatedAt`
-
-#### **Applications Table**
-
-- `Id (PK)`
-- `JobId (FK → Jobs.Id)`
-- `JobSeekerId (FK → Users.Id)`
-- `ResumeURL`
-- `Status (Pending, Interview, Rejected, Hired)`
-- `AppliedAt`
 
 #### **AI Recommendations Table (Optional)**
 

@@ -1,0 +1,6 @@
+- Master Node
+	- Api Servers 
+	- Controller Manager 
+	- Scheduler 
+	- etcd : for backuo store and store status data of cluster 
+- Worker Nodes 

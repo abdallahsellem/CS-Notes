@@ -120,7 +120,8 @@ How hard can that be? You extended the `Notifier` class and put the additional n
 But then someone reasonably asked you, “Why can’t you use several notification types at once? If your house is on fire, you’d probably want to be informed through every channel.”
 
 You tried to address that problem by creating special subclasses which combined several notification methods within one class. However, it quickly became apparent that this approach would bloat the code immensely, not only the library code but the client code as well.
-![[Pasted image 20250410111538.png]]
+![[images/Pasted image 20250410111538.png]]
+
 
 ### Decorator Properties and definition:
 The Decorator Pattern attaches additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
@@ -154,8 +155,4 @@ The Decorator Pattern attaches additional responsibilities to an object dynamica
 
 ## Chapter Four (Factory):
 
-
-factory can be implemented in two ways : 
-1) make the subclasses determine which instance they want by overriding the abstract method in the super class 
-2) make an complete class that return the instance i want 
-3) 
+ 
